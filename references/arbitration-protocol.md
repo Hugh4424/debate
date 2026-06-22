@@ -20,7 +20,7 @@
 - 同一个争议点若甲乙各有主张，两条都列，分别归组
 
 #### 0.2 写入案卷
-路径：`<output-root>/debate/round-<N>/00-案卷.md`（输出根规则见 SKILL.md；读兼容旧版 `pk/` 轮次目录）
+路径：`<output-root>/debate/round-<N>/00-案卷.md`（输出根与旧目录兼容规则见 SKILL.md「辩论产物存档目录」）
 
 格式：
 ```markdown

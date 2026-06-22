@@ -31,7 +31,7 @@
 
 ## 二、落盘存档的完整裁决书（审计用，用户不必翻）
 
-路径：`<output-root>/debate/round-<N>/裁决书.md`（输出根规则见 SKILL.md；读兼容旧版 `pk/` 轮次目录）
+路径：`<output-root>/debate/round-<N>/裁决书.md`（输出根与旧目录兼容规则见 SKILL.md「辩论产物存档目录」）
 
 ```markdown
 # debate 裁决书 — 第 <N> 轮
