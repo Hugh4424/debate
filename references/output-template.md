@@ -37,7 +37,7 @@
 # debate 裁决书 — 第 <N> 轮
 > 方案版本锚点：decision-log v<X.Y>
 > 裁决时间：<DATE>
-> 依据：本目录下 position-甲/乙/丙/丁.md + debate-transcript.md
+> 依据：本目录下 position-甲-claude.md / 乙-codex.md / 丙-杠精.md / 丁-影响搅局.md + debate-transcript.md
 
 ## 1. 逐条裁决（含完整理由）
 ### 甲1：{提案}

@@ -43,7 +43,7 @@ const MR2_KEYWORDS: Record<Exclude<Mr2Category, "implementation_only">, string[]
 
 // MR-2 分类判定：根据 finding 描述判定类别。
 //
-// ⚠️ 这是**确定性 fallback**，靠关键词加权打分，鲁棒性有限（自然语言无确定性边界）。
+// ⚠️ 这是**确定性 fallback**，靠各类别的关键词命中计数取最高者，鲁棒性有限（自然语言无确定性边界）。
 // 首选路径：由 orchestrator(LLM) 在调用前直接判定 Mr2Category 并填进 finding.category，
 // 本函数只在无 LLM 判类的环境下兜底。触发/退出规则（shouldTriggerPK/shouldExitPK）
 // 才是本文件作为"单一权威源"的核心，那部分是纯规则映射、确定可测。
@@ -61,7 +61,7 @@ export function classifyByMr2(description: string): Mr2Category {
   return tally[winner] > 0 ? winner : "implementation_only";
 }
 
-// 判断是否触发 pk
+// 判断是否触发 debate
 export function shouldTriggerPK(findings: Finding[]): TriggerDecision {
   const dl = findings.filter((f) =>
     DIRECTION_LEVEL_CATEGORIES.includes(f.category),
