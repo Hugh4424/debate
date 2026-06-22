@@ -9,7 +9,7 @@
 按"只给最终结果 + 决策依据"原则。每条提案一行：
 
 ```markdown
-## 第 <N> 轮审查裁决（基于五方对抗 PK，decision-log v<X.Y>）
+## 第 <N> 轮审查裁决（基于五方对抗辩论，decision-log v<X.Y>）
 
 | 提案 | 来源 | 裁决 | 决策依据（一句） | 幸存论点 → 被驳论点 |
 |------|------|------|------------------|---------------------|
@@ -34,7 +34,7 @@
 路径：`<output-root>/debate/round-<N>/裁决书.md`（输出根规则见 SKILL.md；读兼容旧版 `pk/` 轮次目录）
 
 ```markdown
-# PK 裁决书 — 第 <N> 轮
+# debate 裁决书 — 第 <N> 轮
 > 方案版本锚点：decision-log v<X.Y>
 > 裁决时间：<DATE>
 > 依据：本目录下 position-甲/乙/丙/丁.md + debate-transcript.md

@@ -1,6 +1,6 @@
 ---
 name: debate
-description: 可选便利层 — 把审查裁决从单人主观升级为五方法庭式对抗辩论。依赖 Agent Teams，缺它 intake 仍能走完（自动降级单人三档）。适用：审查发现裁决 / 决策对抗 / 多方辩论。需 Agent Teams 环境（CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1）。
+description: 用于审查发现裁决 / 决策对抗 / 多方案对比辩论 —— 把"该采纳哪条发现、选哪个方案"的裁决从单人主观升级为五方法庭式对抗，破除作者偏见（self-preference）。Claude 当禁言法官，独立子代理分饰控辩各方互相质疑。可选便利层：依赖 Agent Teams 环境（CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1），缺它自动降级单人三档，不阻塞工作流。
 recommended: true
 ---
 
@@ -20,7 +20,7 @@ recommended: true
 
 | 环境条件 | 执行路径 |
 |---------|---------|
-| 有 Agent Teams（`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`） | 自动启用五方法庭式对抗 PK（见下方完整流程） |
+| 有 Agent Teams（`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`） | 自动启用五方法庭式对抗辩论（见下方完整流程） |
 | 无 Agent Teams（单 agent CLI 等环境） | 自动降级单人三档（见降级路径段） |
 
 ## 降级路径：单人三档
@@ -61,7 +61,7 @@ recommended: true
 
 ## 粒度
 
-**整轮一场辩论**：一轮 codex 审查的所有发现 + 对应的 Claude 决策，打包进**一场** PK，不是每条发现单独开庭。
+**整轮一场辩论**：一轮 codex 审查的所有发现 + 对应的 Claude 决策，打包进**一场**辩论，不是每条发现单独开庭。
 
 ## 四阶段流程（严格不可跳）
 
@@ -94,11 +94,11 @@ Phase 3: 综合裁决    法官综合幸存论点逐条裁决（采纳/部分采
 
 | 文件 | 内容 |
 |------|------|
-| `案卷.md` | 本轮待审提案清单（审查发现 + Claude 决策） |
-| `position-甲.md` | 甲队（Claude 决策代言人）立场书 |
-| `position-乙.md` | 乙队（codex/审查发现代言人）立场书 |
-| `position-丙.md` | 丙队（杠精）立场书 |
-| `position-丁.md` | 丁队（影响评估+搅局）立场书 |
+| `00-案卷.md` | 本轮待审提案清单（审查发现 + Claude 决策） |
+| `position-甲-claude.md` | 甲队（Claude 决策代言人）立场书 |
+| `position-乙-codex.md` | 乙队（codex/审查发现代言人）立场书 |
+| `position-丙-杠精.md` | 丙队（杠精）立场书 |
+| `position-丁-影响搅局.md` | 丁队（影响评估+搅局）立场书 |
 | `debate-transcript.md` | 辩论 transcript（每轮≤2 轮） |
 | `裁决书.md` | 最终裁决书（含决策溯源三字段模板） |
 
@@ -152,7 +152,7 @@ debate 触发标准按 **MR-2 四分类**判定：
 
 ### Step 2：确认前置 + 启用 Agent Teams
 - **环境自动判定**：检查 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` 是否启用
-  - 已启用 → 继续五方 PK 流程
+  - 已启用 → 继续五方辩论流程
   - 未启用 → 走降级路径（单人三档，见降级路径段）
 - 准备好案卷：本轮审查发现清单、Claude 对应决策、decision-log 当前版本号（方案版本锚点）
 
@@ -178,16 +178,16 @@ debate 触发标准按 **MR-2 四分类**判定：
 | 字段 | 内容 | 示例 |
 |------|------|------|
 | **决策** | 本条裁决的具体结论 | 采纳 codex 发现：黑名单改为配置驱动 |
-| **依据** | 证据/审查发现编号 + 锚点 | codex-review-002-finding-3，用户原话"不要硬编码"（pk-r1-裁决2） |
+| **依据** | 证据/审查发现编号 + 锚点 | codex-review-002-finding-3，用户原话"不要硬编码"（debate-r1-裁决2） |
 | **判定方** | 用户原话·codex 意见·辩论共识 | 辩论共识（甲队论点幸存 + 丁队影响评估支持） |
 
 ### 锚点格式
 
-`pk-r&lt;N&gt;-裁决&lt;M&gt;` — 可反查对应的辩论轮次和裁决条目编号。
+`debate-r&lt;N&gt;-裁决&lt;M&gt;` — 可反查对应的辩论轮次和裁决条目编号。
 
 例如：
-- `pk-r1-裁决3` → 第 1 轮 pk 辩论的第 3 条裁决
-- `pk-r2-裁决1` → 第 2 轮 pk 辩论的第 1 条裁决
+- `debate-r1-裁决3` → 第 1 轮 debate 辩论的第 3 条裁决
+- `debate-r2-裁决1` → 第 2 轮 debate 辩论的第 1 条裁决
 
 裁决书记录时，每条决策标注锚点。decision-log 的「决策溯源全览」节引用该锚点。
 
@@ -199,7 +199,7 @@ debate 触发标准按 **MR-2 四分类**判定：
 - ❌ 按提案原顺序提交给各队 —— 必须打乱（防位置偏见）
 - ❌ 超过 2 轮辩论 —— 边际收益骤降
 - ❌ 用 `debate` 子代理生成审查发现或替代 codex 审查 —— 越界，撞"禁止自审自判"
-- ❌ 无 Agent Teams 环境强制跑五方 PK —— 必须降级，不可强制开庭
+- ❌ 无 Agent Teams 环境强制跑五方辩论 —— 必须降级，不可强制开庭
 
 ## 来源
 

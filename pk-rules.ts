@@ -25,22 +25,40 @@ const DIRECTION_LEVEL_CATEGORIES: Mr2Category[] = [
   "requirement_interpretation",
 ];
 
-// MR-2 分类判定：根据 finding 描述判定类别
+// 每个方向级类别的关键词表（implementation_only 是无匹配时的兜底，不需关键词）。
+const MR2_KEYWORDS: Record<Exclude<Mr2Category, "implementation_only">, string[]> = {
+  problem_change: [
+    "problem", "痛点", "方向", "问题改变", "核心场景", "使用场景",
+    "目标变了", "根本问题", "真正的问题", "方向性",
+  ],
+  scope_priority: [
+    "scope", "优先级", "时机", "排期", "范围", "是否做", "要不要做",
+    "该不该", "先后顺序", "creep", "backlog",
+  ],
+  requirement_interpretation: [
+    "理解", "解释", "需求分歧", "读法", "歧义", "诠释", "怎么理解",
+    "需求原文", "理解不同",
+  ],
+};
+
+// MR-2 分类判定：根据 finding 描述判定类别。
+//
+// ⚠️ 这是**确定性 fallback**，靠关键词加权打分，鲁棒性有限（自然语言无确定性边界）。
+// 首选路径：由 orchestrator(LLM) 在调用前直接判定 Mr2Category 并填进 finding.category，
+// 本函数只在无 LLM 判类的环境下兜底。触发/退出规则（shouldTriggerPK/shouldExitPK）
+// 才是本文件作为"单一权威源"的核心，那部分是纯规则映射、确定可测。
 export function classifyByMr2(description: string): Mr2Category {
   const k = description.toLowerCase();
-  if (
-    k.includes("problem") || k.includes("痛点") || k.includes("方向") ||
-    k.includes("问题改变")
-  ) {
-    return "problem_change";
+  const tally: Record<string, number> = {};
+  for (const cat of DIRECTION_LEVEL_CATEGORIES) {
+    tally[cat] = MR2_KEYWORDS[cat as keyof typeof MR2_KEYWORDS]
+      .filter((kw) => k.includes(kw)).length;
   }
-  if (k.includes("scope") || k.includes("优先级") || k.includes("时机")) {
-    return "scope_priority";
-  }
-  if (k.includes("理解") || k.includes("解释") || k.includes("需求分歧")) {
-    return "requirement_interpretation";
-  }
-  return "implementation_only";
+  // 取命中数最高的方向级类别；并列时按 DIRECTION_LEVEL_CATEGORIES 顺序优先。
+  const winner = DIRECTION_LEVEL_CATEGORIES.reduce((a, b) =>
+    tally[a] >= tally[b] ? a : b,
+  );
+  return tally[winner] > 0 ? winner : "implementation_only";
 }
 
 // 判断是否触发 pk
