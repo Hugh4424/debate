@@ -1,6 +1,6 @@
 ---
 name: debate
-description: 用于审查发现裁决 / 决策对抗 / 多方案对比辩论 —— 把单人主观裁决升级为五方法庭式对抗。可选便利层：依赖 Agent Teams（CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1），缺它自动降级单人三档，不阻塞工作流。
+description: 用于审查发现裁决、多方案对比或决策对抗时，当需要避免 Claude 自身 self-preference bias、存在方向级分歧（问题定义/范围/需求解释）、或需要对立方案对等上庭受审。
 recommended: true
 ---
 
