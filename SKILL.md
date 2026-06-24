@@ -85,12 +85,12 @@ Phase 3: 综合裁决    法官综合幸存论点逐条裁决（采纳/部分采
 ## 辩论产物存档目录（参数化输出根）
 
 **输出根**：
-- 有 task-dir 传参 → 以 `<output-root>/` 为根
-- 无传参 → 当前会话根目录建 `tasks/<task-name>/`，产物落 `tasks/<task-name>/artifacts/`
+- 有 task-dir 传参 → 以 `{output-root}/` 为根
+- 无传参 → 当前会话根目录建 `tasks/{task-name}/`，产物落 `tasks/{task-name}/artifacts/`
 
-新写产物统一使用 `debate/` 子目录：`<output-root>/debate/round-<seq>/`。读取时兼容旧版 `debate/` 之前的 `pk/` 轮次目录（找不到 `debate/` 时回退读取 `pk/` 目录）。
+新写产物统一使用 `debate/` 子目录：`{output-root}/debate/round-{seq}/`。读取时兼容旧版 `debate/` 之前的 `pk/` 轮次目录（找不到 `debate/` 时回退读取 `pk/` 目录）。
 
-所有辩论产物落盘到输出根下的 `debate/round-<seq>/`，按轮次分子目录，每轮包含：
+所有辩论产物落盘到输出根下的 `debate/round-{seq}/`，按轮次分子目录，每轮包含：
 
 | 文件 | 内容 |
 |------|------|
@@ -143,9 +143,9 @@ debate 触发标准按 **MR-2 四分类**判定：
 
 ```
 ### debate 触发判断留痕
-- 反对 X：<触发或不触发的具体分歧内容>
-- 决定 Y：<进入 debate / 不进入 debate>
-- 理由 Z：<依据 MR-2 分类和具体证据>
+- 反对 X：[触发或不触发的具体分歧内容]
+- 决定 Y：[进入 debate / 不进入 debate]
+- 理由 Z：[依据 MR-2 分类和具体证据]
 ```
 
 记录写入输出根下的 `debate/trigger-decision.md`。缺此记录 → 视为 debate 触发未执行。

@@ -9,7 +9,7 @@
 按"只给最终结果 + 决策依据"原则。每条提案一行：
 
 ```markdown
-## 第 <N> 轮审查裁决（基于五方对抗辩论，decision-log v<X.Y>）
+## 第 {N} 轮审查裁决（基于五方对抗辩论，decision-log v{X.Y}）
 
 | 提案 | 来源 | 裁决 | 决策依据（一句） | 幸存论点 → 被驳论点 |
 |------|------|------|------------------|---------------------|
@@ -31,12 +31,12 @@
 
 ## 二、落盘存档的完整裁决书（审计用，用户不必翻）
 
-路径：`<output-root>/debate/round-<N>/裁决书.md`（输出根与旧目录兼容规则见 SKILL.md「辩论产物存档目录」）
+路径：`{output-root}/debate/round-{N}/裁决书.md`（输出根与旧目录兼容规则见 SKILL.md「辩论产物存档目录」）
 
 ```markdown
-# debate 裁决书 — 第 <N> 轮
-> 方案版本锚点：decision-log v<X.Y>
-> 裁决时间：<DATE>
+# debate 裁决书 — 第 {N} 轮
+> 方案版本锚点：decision-log v{X.Y}
+> 裁决时间：{DATE}
 > 依据：本目录下 position-甲-claude.md / 乙-codex.md / 丙-杠精.md / 丁-影响搅局.md + debate-transcript.md
 
 ## 1. 逐条裁决（含完整理由）
@@ -61,7 +61,7 @@
 - 虚假共识预警：{有无，怎么处理}
 
 ## 4. 回写 decision-log 指引
-本轮裁决导致 decision-log 的哪些变更（新增决策/修正/版本号递增到 v<X.Y+1>）
+本轮裁决导致 decision-log 的哪些变更（新增决策/修正/版本号递增到 v{X.Y+1}）
 ```
 
 ---

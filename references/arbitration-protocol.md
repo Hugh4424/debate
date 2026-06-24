@@ -20,12 +20,12 @@
 - 同一个争议点若甲乙各有主张，两条都列，分别归组
 
 #### 0.2 写入案卷
-路径：`<output-root>/debate/round-<N>/00-案卷.md`（输出根与旧目录兼容规则见 SKILL.md「辩论产物存档目录」）
+路径：`{output-root}/debate/round-{N}/00-案卷.md`（输出根与旧目录兼容规则见 SKILL.md「辩论产物存档目录」）
 
 格式：
 ```markdown
-# debate 案卷 — 第 <N> 轮审查裁决
-方案版本锚点：decision-log v<X.Y>
+# debate 案卷 — 第 {N} 轮审查裁决
+方案版本锚点：decision-log v{X.Y}
 待审提案总数：M（甲组 a 条 + 乙组 b 条）
 
 ## 甲组提案（Claude 决策）
